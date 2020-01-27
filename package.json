@@ -1,0 +1,25 @@
+{
+  "name": "wechat-miniprogram-navigator",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "miniprogram": "dist",
+  "scripts": {
+    "build": "tsc src/index.ts --outDir dist/ --target ES5 --lib ES5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simsir-lin/wechat-miniprogram-navigator.git"
+  },
+  "author": "simsir",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simsir-lin/wechat-miniprogram-navigator/issues"
+  },
+  "homepage": "https://github.com/simsir-lin/wechat-miniprogram-navigator#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "miniprogram-api-typings": "^2.10.1",
+    "typescript": "^3.7.5"
+  }
+}

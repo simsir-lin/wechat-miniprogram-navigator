@@ -1,0 +1,4 @@
+<view class="container">
+  <view class="num">{{ num }}</view>
+  <button bindtap="to">跳转</button>
+</view>

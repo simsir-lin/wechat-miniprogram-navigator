@@ -1,4 +1,4 @@
-const navigator = require('wechat-miniprogram-navigator')
+import navigator from 'wechat-miniprogram-navigator'
 
 Page({
   data: {

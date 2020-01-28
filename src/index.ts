@@ -4,26 +4,36 @@
 const NavigatorEventName = "NavigatorEventName";
 
 class Navigator {
-  events: {};
-  data: {};
+  events: Object;
+  data: Object;
+  constructor() {
+    this.events = {}
+    this.data = {};
+  }
 
   to(
     path: string,
-    { events, data = "" }: WechatMiniprogramNavigator.ToOptions
+    options: WechatMiniprogramNavigator.ToOptions = {
+      events: {},
+      data: ""
+    }
   ) {
+    if (!path) {
+      return;
+    }
     wx.navigateTo({
       url: path,
-      events: events,
+      events: options.events,
       success: res => {
         if (res.eventChannel) {
-          res.eventChannel.emit(NavigatorEventName, data);
+          res.eventChannel.emit(NavigatorEventName, options.data);
         } else {
           let indexOf = path.indexOf("?");
           if (indexOf >= 0) {
             path = path.substring(0, indexOf);
           }
-          this.events[path] = events;
-          this.data[path] = data;
+          this.events[path] = options.events;
+          this.data[path] = options.data;
         }
       }
     });
@@ -31,18 +41,27 @@ class Navigator {
 
   emit(
     currentPage: WechatMiniprogram.Page.Instance<any, any>,
-    { name, data = "" }: WechatMiniprogramNavigator.EmitOptions
+    options: WechatMiniprogramNavigator.EmitOptions = {
+      event: '',
+      data: ''
+    }
   ) {
+    if (!currentPage) {
+      return;
+    }
+    if (!options.event) {
+      return;
+    }
     if (
       currentPage.getOpenerEventChannel &&
       currentPage.getOpenerEventChannel().emit
     ) {
-      currentPage.getOpenerEventChannel().emit(name, data);
+      currentPage.getOpenerEventChannel().emit(options.event, options.data);
     } else {
       // 兼容
       let events = this.events[`/${currentPage.route}`];
-      if (events && events[name]) {
-        events[name].call(null, data);
+      if (events && events[options.event]) {
+        events[options.event].call(null, options.data);
       }
     }
   }
@@ -51,6 +70,9 @@ class Navigator {
     page: WechatMiniprogram.Page.Instance<any, any>,
     cb: WechatMiniprogram.NavigateToSuccessCallback
   ) {
+    if (!page) {
+      return;
+    }
     if (page.getOpenerEventChannel) {
       page.getOpenerEventChannel().on(NavigatorEventName, function(data) {
         cb && cb(data);
@@ -58,13 +80,13 @@ class Navigator {
     } else {
       // 兼容
       let data = this.data[`/${page.route}`];
-      if (data) {
+      if (data !== undefined) {
         cb && cb(data);
       }
     }
   }
 
-  back(delta: number) {
+  back(delta: number = 1) {
     wx.navigateBack({
       delta
     });

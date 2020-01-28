@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "miniprogram": "dist",
   "scripts": {
-    "build": "tsc src/index.ts --outDir dist/ --target ES5 --lib ES5"
+    "build": "tsc src/index.ts --outDir dist/ --target ES6 --lib ES5"
   },
   "repository": {
     "type": "git",

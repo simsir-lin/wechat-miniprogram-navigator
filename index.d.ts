@@ -5,7 +5,7 @@ declare namespace WechatMiniprogramNavigator {
   }
 
   interface EmitOptions {
-    name: string,
+    event: string,
     data?: any
   }
 }

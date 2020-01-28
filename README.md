@@ -11,7 +11,7 @@ npm install --save wechat-miniprogram-navigator
 
 ## 使用
 ```javascript
-const navigator = require('wechat-miniprogram-navigator')
+import navigator from 'wechat-miniprogram-navigator'
 navigator.to('/page/yourpath', ...)
 navigator.emit()
 navigator.getData()
